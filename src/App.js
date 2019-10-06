@@ -6,9 +6,11 @@ import TableContacts from './components/TableContacts';
 import Button from './components/Button';
 
 console.log('Contacts', contacts);
+let initialContacts = contacts.slice(0, 5);
+
 class App extends Component {
   state = {
-    startingContacts: contacts.slice(0, 5),
+    startingContacts: initialContacts,
   };
 
   // // Retorna un número aleatorio entre min (incluido) y max (excluido)
@@ -16,9 +18,14 @@ class App extends Component {
   //   return Math.random() * (max - min) + min;
   // }
 
+  // setInitialContacts = () => {
+  //   let initialContacts = contacts.slice(0, 5);
+  //   this.setState({ startingContacts: initialContacts });
+  // };
+
   addRandomContact = () => {
     // const contacts = contacts;
-    const startingContacts = this.state.startingContacts;
+    const { startingContacts } = this.state;
     console.log('Long : ', contacts.length);
     const randomNumber = Math.floor(Math.random() * (contacts.length - 5) + 5);
     console.log('Random: ', randomNumber);
@@ -34,7 +41,8 @@ class App extends Component {
 
   sortByName = () => {
     // sort by name
-    const sortedContacts = this.state.startingContacts.sort(function(a, b) {
+    const { startingContacts } = this.state;
+    const sortedContacts = startingContacts.sort(function(a, b) {
       var nameA = a.name.toUpperCase(); // ignore upper and lowercase
       var nameB = b.name.toUpperCase(); // ignore upper and lowercase
       if (nameA < nameB) {
@@ -53,7 +61,8 @@ class App extends Component {
   };
   sortByPopularity = () => {
     // sort by name
-    const sortedContacts = this.state.startingContacts.sort(function(a, b) {
+    const { startingContacts } = this.state;
+    const sortedContacts = startingContacts.sort(function(a, b) {
       return b.popularity - a.popularity;
     });
     this.setState({ startingContacts: sortedContacts }, () => {
@@ -62,10 +71,11 @@ class App extends Component {
   };
 
   deleteContact = contactIndex => {
+    const { startingContacts } = this.state;
     console.log('Index: ', contactIndex);
-    this.state.startingContacts.splice(contactIndex, 1);
+    startingContacts.splice(contactIndex, 1);
     // this.setState({ startingContacts: this.state.startingContacts });
-    this.setState({ startingContacts: [...this.state.startingContacts] });
+    this.setState({ startingContacts: [...startingContacts] });
   };
 
   render() {
